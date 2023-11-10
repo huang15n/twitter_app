@@ -1,43 +1,43 @@
 package cst.assignment.twitter.services.impl;
 
+import cst.assignment.twitter.repositories.UserRepository;
+import cst.assignment.twitter.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import cst.assignment.twitter.services.UserService;
-import org.springframework.stereotype.Service;
-
-
 @Service
 public class UserManagementServiceImpl {
 
-	private Map<String, Integer> tokenMap = new HashMap<>(); // Simulated token storage
+	private final Map<String, String> userTokenMap = new HashMap<>(); // Simulated user-to-token mapping
+
+
 
 	@Autowired
-	UserService userService;
+	private UserRepository userRepository;
 
-	public String authenticateUser(Integer userId, String password) {
-		boolean storedUserId = getUserIdByUsernameAndPassword(userId, password);
-
-		if (storedUserId) {
-			String token = UUID.randomUUID().toString();
-			tokenMap.put(token, userId);
-			return token;
-		}
-
-		return null;
+	public String generateToken(String userName) {
+		String token = UUID.randomUUID().toString();
+		userTokenMap.put(userName, token);
+		return token;
 	}
 
-	public int getUserIdFromToken(String token) {
-		return tokenMap.getOrDefault(token, -1);
+
+	public boolean authorizeRequest(String userName, String providedToken) {
+		String storedToken = userTokenMap.get(userName);
+
+		// Check if the provided token matches the stored token for the user
+		return storedToken != null && storedToken.equals(providedToken);
 	}
 
-	private boolean getUserIdByUsernameAndPassword(Integer userId, String password) {
+	private boolean authenticateUserCredentials(String userName, String password) {
+		String storedPassword = userRepository.findPasswordByUsername(userName);
 
-		String storedPassword = userService.getPasswordByUserId(userId);
 		return storedPassword != null && storedPassword.equals(password);
 	}
-
 }
+

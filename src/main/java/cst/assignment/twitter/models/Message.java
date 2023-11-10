@@ -16,7 +16,7 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "messageId")
-    private int messageId;
+    private Integer messageId;
 
     @Column(name = "content")
     private String content;

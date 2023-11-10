@@ -26,16 +26,6 @@ public class UserServiceImpl implements UserService {
 	        return userRepository.save(user);
 	    }
 	    
-	    @Override
-	    public String getPasswordByUserId(int userId) {
-	        Optional<User> userOptional = userRepository.findById(userId);
 
-	        if (userOptional.isPresent()) {
-	            User user = userOptional.get();
-	            return user.getPassword();
-	        }
-
-	        return null; // User not found
-	    }
 
 }

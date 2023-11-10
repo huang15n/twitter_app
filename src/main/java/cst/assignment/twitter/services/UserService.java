@@ -9,7 +9,7 @@ public interface UserService {
 	
 	List<User> getAllUsers();
     User createUser(User user);
-    String getPasswordByUserId(int userId);
+
 
 
 }

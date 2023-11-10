@@ -16,7 +16,7 @@ public class Subscription {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "subscriptionId")
-	private int subscriptionId;
+	private Integer subscriptionId;
 
 	@ManyToOne
 	@JoinColumn(name = "subscriberId")
