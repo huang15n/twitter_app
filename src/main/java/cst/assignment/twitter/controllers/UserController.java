@@ -20,26 +20,33 @@ public class UserController {
 
 //    @Autowired
 //    private UserManagementService userManagementService;
+
+    private final UserService userService;
+    private final UserManagementService userManagementService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService, UserManagementService userManagementService) {
+        this.userService = userService;
+        this.userManagementService = userManagementService;
+    }
 
 
 
 
 
-//    @PostMapping("/login")
-//    public ResponseEntity<String> login(@RequestBody User user) {
-//        // You should validate the username and password against your UserManagementService
-//        // If valid, generate a token (for simplicity, we use a UUID here)
-//        String token = "";
-//        if(userManagementService.authenticateUserCredentials(user.getUsername(), user.getPassword())){
-//            token = userManagementService.generateToken(user.getUsername());
-//        }
-//
-//
-//        // Return the token
-//        return ResponseEntity.ok(token);
-//    }
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody User user) {
+        // You should validate the username and password against your UserManagementService
+        // If valid, generate a token (for simplicity, we use a UUID here)
+        String token = "";
+        if(userManagementService.authenticateUserCredentials(user.getUsername(), user.getPassword())){
+            token = userManagementService.generateToken(user.getUsername());
+        }
+
+
+        // Return the token
+        return ResponseEntity.ok(token);
+    }
 
 
     @GetMapping("/")

@@ -10,11 +10,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.Customizer;
 
 @Configuration
+
 public class SecurityConfig {
 
 
-//    @Autowired
-//    private UserManagementService userManagementService;
+    @Autowired
+    private UserManagementService userManagementService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

@@ -1,6 +1,7 @@
 package cst.assignment.twitter.services.impl;
 
 import cst.assignment.twitter.repositories.UserRepository;
+import cst.assignment.twitter.services.UserManagementService;
 import cst.assignment.twitter.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
-public class UserManagementServiceImpl {
+public class UserManagementServiceImpl implements UserManagementService {
 
 	private final Map<String, String> userTokenMap = new HashMap<>(); // Simulated user-to-token mapping
 
@@ -34,7 +35,7 @@ public class UserManagementServiceImpl {
 		return storedToken != null && storedToken.equals(providedToken);
 	}
 
-	private boolean authenticateUserCredentials(String userName, String password) {
+	public boolean authenticateUserCredentials(String userName, String password) {
 		String storedPassword = userRepository.findPasswordByUsername(userName);
 
 		return storedPassword != null && storedPassword.equals(password);
