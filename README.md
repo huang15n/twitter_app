@@ -189,3 +189,12 @@ linux@linux:~$ sudo kill -9 2531
 
 
 
+enable logging 
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.url=jdbc:mysql://localhost:3306/twitter_app
+spring.datasource.username=twitter
+spring.datasource.password=123456
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.jpa.hibernate.ddl-auto=update
+logging.level.org.springframework.security: DEBUG
