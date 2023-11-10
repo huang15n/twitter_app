@@ -1,5 +1,6 @@
 package cst.assignment.twitter.services.impl;
 
+import cst.assignment.twitter.models.User;
 import cst.assignment.twitter.repositories.UserRepository;
 import cst.assignment.twitter.services.UserManagementService;
 import cst.assignment.twitter.services.UserService;
@@ -28,17 +29,22 @@ public class UserManagementServiceImpl implements UserManagementService {
 	}
 
 
-	public boolean authorizeRequest(String userName, String providedToken) {
-		String storedToken = userTokenMap.get(userName);
+	public boolean authorizeRequest(String providedToken) {
 
+       System.out.println("the current tokens on hold is : ");
+		userTokenMap.forEach((key, value) -> {
+			System.out.println("Key: " + key + ", Value: " + value);
+		});
+
+		System.out.println("the user map contains this token is :" + userTokenMap.containsValue(providedToken));
 		// Check if the provided token matches the stored token for the user
-		return storedToken != null && storedToken.equals(providedToken);
+		return userTokenMap.containsValue(providedToken);
 	}
 
 	public boolean authenticateUserCredentials(String userName, String password) {
-		String storedPassword = userRepository.findPasswordByUsername(userName);
+		User user = userRepository.findPasswordByUsername(userName);
 
-		return storedPassword != null && storedPassword.equals(password);
+		return user.getPassword() != null && user.getPassword().equals(password);
 	}
 }
 

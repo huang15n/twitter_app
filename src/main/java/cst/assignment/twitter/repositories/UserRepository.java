@@ -7,6 +7,6 @@ import cst.assignment.twitter.models.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
 
-    String findPasswordByUsername(String username);
+    User findPasswordByUsername(String username);
 
 }

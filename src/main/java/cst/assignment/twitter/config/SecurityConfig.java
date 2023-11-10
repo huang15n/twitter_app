@@ -14,8 +14,6 @@ import org.springframework.security.config.Customizer;
 public class SecurityConfig {
 
 
-    @Autowired
-    private UserManagementService userManagementService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -23,7 +21,7 @@ public class SecurityConfig {
                http
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/messages/**","subscriptions/**", "users/**", "roles/**").permitAll()
-                );
+                ).csrf().disable();;
 
         return http.build();
     }

@@ -9,7 +9,7 @@ public interface UserManagementService {
 
 	public String generateToken(String userName);
 
-	public boolean authorizeRequest(String userName, String providedToken);
+	public boolean authorizeRequest(String providedToken);
 
 	public boolean authenticateUserCredentials(String userName, String password);
 	

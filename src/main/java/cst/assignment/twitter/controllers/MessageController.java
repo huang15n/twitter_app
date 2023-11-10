@@ -2,11 +2,11 @@ package cst.assignment.twitter.controllers;
 
 import java.util.List;
 
+import cst.assignment.twitter.services.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import cst.assignment.twitter.models.Message;
 import cst.assignment.twitter.services.MessageService;
@@ -18,13 +18,46 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
-    @GetMapping("/")
-    public List<Message> getAllMessages() {
-        return messageService.getAllMessages();
+    private final UserManagementService userManagementService;
+
+
+    @Autowired
+    public MessageController (UserManagementService userManagementService) {
+        this.userManagementService = userManagementService;
+    }
+
+    @GetMapping("/allMessages")
+    public ResponseEntity<List<Message>> getAllMessages(@RequestHeader("Authorization") String authorizationHeader) {
+
+        if (authorizationHeader != null) {
+            String token = authorizationHeader;
+            System.out.println("the token is " + token);
+
+
+            if (userManagementService.authorizeRequest(token)) {
+
+                return ResponseEntity.ok(messageService.getAllMessages());
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @GetMapping("/producer/{producerId}")
-    public List<Message> getMessagesByProducer(@PathVariable int producerId) {
-        return messageService.getMessagesByProducer(producerId);
+    public ResponseEntity<List<Message>> getMessagesByProducer(@PathVariable int producerId, @RequestHeader("Authorization") String authorizationHeader) {
+
+
+        if (authorizationHeader != null) {
+            String token = authorizationHeader;
+            System.out.println("the token is " + token);
+
+
+            if (userManagementService.authorizeRequest(token)) {
+
+                return ResponseEntity.ok(messageService.getMessagesByProducer(producerId));
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }

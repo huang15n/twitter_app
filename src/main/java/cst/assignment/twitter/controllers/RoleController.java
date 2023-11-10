@@ -2,14 +2,11 @@ package cst.assignment.twitter.controllers;
 
 import java.util.List;
 
+import cst.assignment.twitter.services.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import cst.assignment.twitter.models.Role;
 import cst.assignment.twitter.services.RoleService;
@@ -21,23 +18,51 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @GetMapping("/")
-    public List<Role> getAllRoles() {
-        return roleService.getAllRoles();
+    private final UserManagementService userManagementService;
+
+
+    @Autowired
+    public RoleController (UserManagementService userManagementService) {
+        this.userManagementService = userManagementService;
     }
 
-    @GetMapping("/{id}")
-    public Role getRole(@PathVariable int id) {
-        return roleService.getRoleById(id);
+
+    @GetMapping("/allRoles")
+    public ResponseEntity<List<Role>> getAllRoles( @RequestHeader("Authorization") String authorizationHeader) {
+
+
+
+        if (authorizationHeader != null) {
+            String token = authorizationHeader;
+            System.out.println("the token is " + token);
+
+
+            if (userManagementService.authorizeRequest(token)) {
+
+                return ResponseEntity.ok(roleService.getAllRoles());
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
     }
 
-    @PostMapping("/")
-    public Role createRole(@RequestBody Role role) {
-        return roleService.createRole(role);
+    @GetMapping("/role/{id}")
+    public ResponseEntity<Role> getRole(@PathVariable int id,  @RequestHeader("Authorization") String authorizationHeader) {
+
+        if (authorizationHeader != null) {
+            String token = authorizationHeader;
+            System.out.println("the token is " + token);
+
+
+            if (userManagementService.authorizeRequest(token)) {
+
+                return ResponseEntity.ok(roleService.getRoleById(id));
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteRole(@PathVariable int id) {
-        roleService.deleteRole(id);
-    }
+
 }
