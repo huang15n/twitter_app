@@ -1,23 +1,23 @@
 package cst.assignment.twitter.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Column;
 import lombok.Data;
-
 @Entity
-@Table(name = "Role")
+@Table(name = "role")
 @Data
 public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "RoleID")
-	private int roleID;
+	@Column(name = "roleId")
+	private int roleId;
 
-	@Column(name = "RoleName")
+	@Column(name = "roleName")
 	private String roleName;
-
 }

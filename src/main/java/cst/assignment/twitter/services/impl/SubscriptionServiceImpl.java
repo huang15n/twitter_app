@@ -1,6 +1,6 @@
 package cst.assignment.twitter.services.impl;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +16,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
  
 	@Override
-	public List<Subscription> getSubscriptionsForSubscriber(int subscriberId) {
-		return subscriptionRepository.findBySubscriberUserId(subscriberId);
+	public Optional<Subscription> getSubscriptionsForSubscriber(Integer subscriberId) {
+		return subscriptionRepository.findById(subscriberId);
 	}
 
 }

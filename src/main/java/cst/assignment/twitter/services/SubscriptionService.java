@@ -1,10 +1,10 @@
 package cst.assignment.twitter.services;
 
-import java.util.List;
+import java.util.Optional;
 
 import cst.assignment.twitter.models.Subscription;
 
 public interface SubscriptionService {
-	List<Subscription> getSubscriptionsForSubscriber(int subscriberId);
+	Optional<Subscription> getSubscriptionsForSubscriber(Integer subscriberId);
 
 }

@@ -9,28 +9,25 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
-
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 @Data
 public class User {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "UserID")
-    private int userID;
+    @Column(name = "userId")
+    private int userId;
 
-    @Column(name = "Username")
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "Password")
+    @Column(name = "password")
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "RoleID")
+    @JoinColumn(name = "roleId") // This should match the column name in the database
     private Role role;
-
-	 
 }

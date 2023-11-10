@@ -1,4 +1,5 @@
 package cst.assignment.twitter.models;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,20 +9,19 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
-
 @Entity
-@Table(name = "Message")
+@Table(name = "message")
 @Data
 public class Message {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MessageID")
-    private int messageID;
+    @Column(name = "messageId")
+    private int messageId;
 
-    @Column(name = "Content")
+    @Column(name = "content")
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "UserID")
+    @JoinColumn(name = "userId")
     private User user;
 }

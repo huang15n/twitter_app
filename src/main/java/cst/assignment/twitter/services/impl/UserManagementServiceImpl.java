@@ -7,7 +7,10 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cst.assignment.twitter.services.UserService;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class UserManagementServiceImpl {
 
 	private Map<String, Integer> tokenMap = new HashMap<>(); // Simulated token storage

@@ -8,6 +8,5 @@ import cst.assignment.twitter.models.Subscription;
 
 public interface SubscriptionRepository extends JpaRepository<Subscription, Integer>{
 
-	List<Subscription> findBySubscriberUserId(int subscriberId);
 
 }
