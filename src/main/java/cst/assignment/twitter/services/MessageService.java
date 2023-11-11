@@ -10,4 +10,6 @@ public interface MessageService {
 
 	List<Message> getMessagesByProducer(int producerId);
 
+	List<Message> getMessagesBySubscriber(int subscriberId);
+
 }

@@ -22,7 +22,12 @@ public class MessageServiceImpl implements MessageService{
 
 	    @Override
 	    public List<Message> getMessagesByProducer(int producerId) {
-	        return messageRepository.findByUserUserId(producerId);
+	        return messageRepository.findByUserUserIdAndUserRoleRoleId(producerId, 1);
 	    }
+
+	@Override
+	public List<Message> getMessagesBySubscriber(int subscriberId) {
+		return messageRepository.findByUserUserIdAndUserRoleRoleId(subscriberId, 2);
+	}
 
 }

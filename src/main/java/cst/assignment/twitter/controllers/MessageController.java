@@ -60,4 +60,23 @@ public class MessageController {
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
+
+
+    @GetMapping("/subscriber/{subscriberId}")
+    public ResponseEntity<List<Message>> getMessagesBySubscriber(@PathVariable int subscriberId, @RequestHeader("Authorization") String authorizationHeader) {
+
+
+        if (authorizationHeader != null) {
+            String token = authorizationHeader;
+            System.out.println("the token is " + token);
+
+
+            if (userManagementService.authorizeRequest(token)) {
+
+                return ResponseEntity.ok(messageService.getMessagesBySubscriber(subscriberId));
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
 }
